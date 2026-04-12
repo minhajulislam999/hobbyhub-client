@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { signOut } from "firebase/auth";
@@ -7,21 +7,22 @@ import toast from "react-hot-toast";
 
 const Navbar = () => {
   const { user } = useContext(AuthContext);
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const handleThemeToggle = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
 
   const handleLogout = () => {
-        // Implement logout functionality here
-        // Example: await signOut(auth);
-        signOut(auth)
-        .then(() => {
-            // Sign-out successful.
-
-            toast.success("Logout successful!");
-        })
-        .catch((error) => {
-            // An error happened.
-            toast.error(error.message);
-        });
-  }
+    signOut(auth)
+      .then(() => toast.success("Logged out successfully!"))
+      .catch((err) => toast.error(err.message));
+  };
 
   return (
     <nav className="bg-base-100 shadow-md px-6 py-3 flex justify-between items-center">
@@ -32,7 +33,6 @@ const Navbar = () => {
       <div className="flex gap-4 items-center">
         <Link to="/" className="hover:text-primary">Home</Link>
         <Link to="/groups" className="hover:text-primary">All Groups</Link>
-
         {user && (
           <>
             <Link to="/createGroup" className="hover:text-primary">Create Group</Link>
@@ -41,16 +41,19 @@ const Navbar = () => {
         )}
       </div>
 
-      {/* Auth Section */}
+      {/* Right Side */}
       <div className="flex gap-3 items-center">
+        {/* Theme Toggle */}
+        <label className="swap swap-rotate">
+          <input type="checkbox" onChange={handleThemeToggle} checked={theme === 'dark'} />
+          <span className="swap-on text-xl">🌙</span>
+          <span className="swap-off text-xl">☀️</span>
+        </label>
+
         {user ? (
           <>
             <div className="relative group">
-              <img
-                src={user.photoURL}
-                alt="user"
-                className="w-10 h-10 rounded-full cursor-pointer"
-              />
+              <img src={user.photoURL} alt="user" className="w-10 h-10 rounded-full cursor-pointer" />
               <span className="absolute hidden group-hover:block bg-gray-800 text-white text-sm px-2 py-1 rounded -bottom-8 left-0">
                 {user.displayName}
               </span>
