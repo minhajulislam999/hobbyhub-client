@@ -1,9 +1,27 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase/firebase.config";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const { user } = useContext(AuthContext);
+
+  const handleLogout = () => {
+        // Implement logout functionality here
+        // Example: await signOut(auth);
+        signOut(auth)
+        .then(() => {
+            // Sign-out successful.
+
+            toast.success("Logout successful!");
+        })
+        .catch((error) => {
+            // An error happened.
+            toast.error(error.message);
+        });
+  }
 
   return (
     <nav className="bg-base-100 shadow-md px-6 py-3 flex justify-between items-center">
@@ -37,7 +55,7 @@ const Navbar = () => {
                 {user.displayName}
               </span>
             </div>
-            <button className="btn btn-sm btn-error">Logout</button>
+            <button onClick={handleLogout} className="btn btn-sm btn-error">Logout</button>
           </>
         ) : (
           <Link to="/login" className="btn btn-sm btn-primary">Login</Link>
