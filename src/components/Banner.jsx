@@ -3,6 +3,7 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { Typewriter } from 'react-simple-typewriter';
 
 const Banner = () => {
   const slides = [
@@ -27,26 +28,60 @@ const Banner = () => {
   ];
 
   return (
-    <Swiper
-      modules={[Autoplay, Pagination, Navigation]}
-      autoplay={{ delay: 3000 }}
-      pagination={{ clickable: true }}
-      navigation={true}
-      loop={true}
-      className="w-full h-[500px]"
-    >
-      {slides.map(slide => (
-        <SwiperSlide key={slide.id}>
-          <div className="relative w-full h-[500px]">
-            <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">
-              <h2 className="text-4xl font-bold mb-4">{slide.title}</h2>
-              <p className="text-xl">{slide.description}</p>
+    <div className="w-full"> {/* মেইন প্যারেন্ট ডিভ */}
+      
+      {/* Typewriter Section */}
+      <div className="text-center py-10 bg-base-200">
+        <h2 className="text-3xl md:text-4xl font-bold">
+          We love{' '}
+          <span className="text-primary">
+            <Typewriter
+              words={['Drawing & Painting', 'Photography', 'Video Gaming', 'Cooking', 'Reading', 'Hiking']}
+              loop={true}
+              cursor
+              cursorStyle="|"
+              typeSpeed={70}
+              deleteSpeed={50}
+              delaySpeed={1500}
+            />
+          </span>
+        </h2>
+      </div>
+
+      {/* Swiper Slider Section */}
+      <Swiper
+        modules={[Autoplay, Pagination, Navigation]}
+        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        pagination={{ clickable: true }}
+        navigation={true}
+        loop={true}
+        className="w-full h-[400px] md:h-[550px]"
+      >
+        {slides.map(slide => (
+          <SwiperSlide key={slide.id}>
+            <div className="relative w-full h-full">
+              {/* Image */}
+              <img 
+                src={slide.image} 
+                alt={slide.title} 
+                className="w-full h-full object-cover" 
+              />
+              
+              {/* Text Overlay with background shadow for readability */}
+              <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white text-center px-6">
+                <h2 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">
+                  {slide.title}
+                </h2>
+                <p className="text-lg md:text-2xl max-w-2xl drop-shadow-md">
+                  {slide.description}
+                </p>
+              </div>
             </div>
-          </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+    </div> 
   );
 };
 
