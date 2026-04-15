@@ -6,8 +6,10 @@ import { Fade, Zoom } from "react-awesome-reveal";
 const FeaturedGroups = () => {
   const [groups, setGroups] = useState([]);
 
+  // axios.get(`${import.meta.env.VITE_API_URL}/groups`)
+
   useEffect(() => {
-    axios.get('http://localhost:5001/groups')
+    axios.get(`${import.meta.env.VITE_API_URL}/groups`)
       .then(res => setGroups(res.data.slice(0, 6)))
   }, []);
 

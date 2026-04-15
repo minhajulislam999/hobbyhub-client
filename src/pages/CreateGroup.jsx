@@ -29,7 +29,7 @@ const CreateGroup = () => {
 
         try {
             //send group data to backend
-            await axios.post('http://localhost:5001/groups', group);
+            await axios.post(`${import.meta.env.VITE_API_URL}/groups`, group);
             toast.success("Group created successfully!");
             navigate('/groups');
 

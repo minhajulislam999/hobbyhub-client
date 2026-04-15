@@ -7,7 +7,7 @@ const AllGroups = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get('http://localhost:5001/groups')
+        axios.get(`${import.meta.env.VITE_API_URL}/groups`)
             .then(res => {
 
                 setGroups(res.data);

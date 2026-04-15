@@ -22,7 +22,7 @@ const MyGroups = () => {
     if (!confirm) return;
 
     try {
-      await axios.delete(`http://localhost:5001/groups/${id}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/groups/${id}`);
       toast.success("Group deleted successfully!");
       setGroups(groups.filter(group => group._id !== id));
     } catch (err) {

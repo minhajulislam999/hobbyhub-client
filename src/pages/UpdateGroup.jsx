@@ -30,7 +30,7 @@ const UpdateGroup = () => {
     };
 
     try {
-      await axios.put(`http://localhost:5001/groups/${id}`, updatedGroup);
+      await axios.put(`${import.meta.env.VITE_API_URL}/groups/${id}`, updatedGroup);
       toast.success("Group updated successfully!");
       navigate("/myGroups");
     } catch (err) {
