@@ -4,6 +4,8 @@ const Some = () => {
   return (
     <div>
       <h1>heading</h1>
+      <p>lorem lorem lorem lorem 
+      </p>
     </div>
   )
 }
